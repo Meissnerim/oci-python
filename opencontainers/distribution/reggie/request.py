@@ -240,6 +240,13 @@ class RequestClient(requests.Session):
         """
         A wrapper to adding basic authentication to the Request
         """
+        if username is None and password is None:
+            return self
+        else:
+            if username is None:
+                username = ""
+            elif password is None:
+                password = ""
         auth_str = "%s:%s" % (username, password)
         auth_header = base64.b64encode(auth_str.encode("utf-8"))
         return self.SetHeader("Authorization", "Basic %s" % auth_header.decode("utf-8"))
